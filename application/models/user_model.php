@@ -42,7 +42,13 @@ class User_model extends CI_Model
 
         return $return;
     }
-	
+	 public function getUserCount()
+    {
+        $query = $this->db->query('SELECT COUNT(*) as `usercount` FROM `user`')->row();
+        $usercount = $query->usercount;
+
+        return $usercount;
+    }
 	public function create($name,$email,$password,$accesslevel,$status,$socialid,$logintype,$image,$json)
 	{
 		$data  = array(

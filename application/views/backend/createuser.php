@@ -33,13 +33,13 @@
 				<input type="text" id="socialid" name="socialid" value="<?php echo set_value('socialid');?>">
 			</div>
 		</div>
-		<div class="row">
+		<!-- <div class="row">
 			<div class="input-field col m6 s12">
 				<label for="contact">Contact</label>
 				<input type="text" id="contact" name="contact" value="<?php echo set_value('contact');?>">
 			</div>
 		</div>
-		<div class="row">
+ -->		<div class="row">
 			<div class="input-field col m6 s12">
 			<select id="logintype" name="logintype" id="" value="<?php echo set_value('logintype');?>">
 			    <option value="Email">Email</option>
@@ -68,7 +68,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<!-- <div class="row">
 			<div class="file-field input-field col m6 s12">
 				<div class="btn blue darken-4">
 					<span>Cover Image</span>
@@ -78,79 +78,13 @@
 					<input class="file-path validate" type="text" placeholder="Upload one or more files" value="<?php echo set_value('coverimage');?>">
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<div class="row">
 			<div class="input-field col m6 s12">
 				<?php echo form_dropdown( 'accesslevel',$accesslevel,set_value( 'accesslevel')); ?>
 					<label>Access Level</label>
 			</div>
 		</div>
-		<div class="row">
-			<div class="input-field col m6 s12">
-				<textarea name="address" class="materialize-textarea" length="120"><?php echo set_value( 'address');?></textarea>
-				<label>Address</label>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col m3 s6">
-				<label for="filled-in-box" class="form-checkbox">Event Notification</label>
-			</div>
-			<div class="col m3 s6">
-				<div class="switch">
-					<label>
-						Off
-						<input type="checkbox" name="eventnotification" value="true">
-						<span class="lever"></span> On
-					</label>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col m3 s6">
-				<label for="filled-in-box" class="form-checkbox">Photo Notification</label>
-			</div>
-			<div class="col m3 s6">
-				<div class="switch">
-					<label>
-						Off
-						<input type="checkbox" name="photonotification" value="true">
-						<span class="lever"></span> On
-					</label>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col m3 s6">
-				<label for="filled-in-box" class="form-checkbox">Video Notification</label>
-			</div>
-			<div class="col m3 s6">
-				<div class="switch">
-					<label>
-						Off
-						<input type="checkbox" name="videonotification" value="true">
-						<span class="lever"></span> On
-					</label>
-				</div>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col m3 s6">
-				<label for="filled-in-box" class="form-checkbox">Blog Notification</label>
-			</div>
-			<div class="col m3 s6">
-				<div class="switch">
-					<label>
-						Off
-						<input type="checkbox" name="blognotification" value="true">
-						<span class="lever"></span> On
-					</label>
-				</div>
-			</div>
-		</div>
-
 		<div class=" form-group">
 			<div class="row">
 				<div class="col m6 s12">

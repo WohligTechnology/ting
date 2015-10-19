@@ -9,7 +9,7 @@
                             <th data-field="id">Id</th>
                             <th data-field="name">Name</th>
                             <th data-field="email">Item Name</th>
-                            <th data-field="logintype">Login Type</th>
+                          <!--   <th data-field="logintype">Login Type</th> -->
                             <th data-field="accesslevelname">Item Name</th>
                             <th data-field="">Action</th>
             
@@ -40,7 +40,7 @@
         if (!resultrow.json) {
             resultrow.json = "";
         }
-        return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.name + "</td><td>" + resultrow.email + "</td><td>" + resultrow.logintype + "</td><td>" + resultrow.accesslevelname + "</td><td><a class='btn waves-effect waves-light  blue darken-4 z-depth-0 less-pad' href='<?php echo site_url('site/edituser?id=');?>" + resultrow.id + "'><i class='fa fa-pencil propericon'></i></a><a class='btn btn-danger btn-xs waves-effect waves-light red pad10 z-depth-0 less-pad' onclick=\"return confirm('Are you sure you want to delete?');\" href='<?php echo site_url('site/deleteuser?id='); ?>" + resultrow.id + "'><i class='material-icons propericon'>delete</i></a></td><tr>";
+        return "<tr><td>" + resultrow.id + "</td><td>" + resultrow.name + "</td><td>" + resultrow.email + "</td><td>" + resultrow.accesslevelname + "</td><td><a class='btn waves-effect waves-light  blue darken-4 z-depth-0 less-pad' href='<?php echo site_url('site/edituser?id=');?>" + resultrow.id + "'><i class='fa fa-pencil propericon'></i></a><a class='btn btn-danger btn-xs waves-effect waves-light red pad10 z-depth-0 less-pad' onclick=\"return confirm('Are you sure you want to delete?');\" href='<?php echo site_url('site/deleteuser?id='); ?>" + resultrow.id + "'><i class='material-icons propericon'>delete</i></a></td><tr>";
     }
     generatejquery('<?php echo $base_url;?>');
 </script>
