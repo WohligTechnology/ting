@@ -18,10 +18,14 @@
     <script src="<?php echo base_url('assets').'/';?>js/jquery.fancybox.pack.js"></script>
     <script src="<?php echo base_url('assets').'/';?>tinymce/tinymce.min.js"></script>
     <script src="<?php echo base_url('assets').'/';?>js/formInit.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+        var admin_url="<?php echo base_url();?>";
+    </script>
 </head>
 
 <body>

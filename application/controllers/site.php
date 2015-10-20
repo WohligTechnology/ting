@@ -20,13 +20,41 @@ class Site extends CI_Controller
 		if(!in_array($accesslevel,$access))
 			redirect( base_url() . 'index.php/site?alerterror=You do not have access to this page. ', 'refresh' );
 	}
+	public function getOrderingDone()
+    {
+        $orderby=$this->input->get("orderby");
+        $ids=$this->input->get("ids");
+        $ids=explode(",",$ids);
+        $tablename=$this->input->get("tablename");
+        $where=$this->input->get("where");
+        if($where == "" || $where=="undefined")
+        {
+            $where=1;
+        }
+        $access = array(
+            '1',
+        );
+        $this->checkAccess($access);
+        $i=1;
+        foreach($ids as $id)
+        {
+            //echo "UPDATE `$tablename` SET `$orderby` = '$i' WHERE `id` = `$id` AND $where";
+            $this->db->query("UPDATE `$tablename` SET `$orderby` = '$i' WHERE `id` = '$id' AND $where");
+            $i++;
+            //echo "/n";
+        }
+        $data["message"]=true;
+        $this->load->view("json",$data);
+        
+    }
 	public function index()
 	{
 		$access = array("1","2");
 		$this->checkaccess($access);
 		$data['usercount'] = $this->user_model->getUserCount();
-		$data[ 'page' ] = 'dashboard';
-		$data[ 'title' ] = 'Welcome';
+		$data["page"]="viewapps";
+		$data["base_url"]=site_url("site/viewappsjson");
+		$data["title"]="View apps";
 		$this->load->view( 'template', $data );	
 	}
 	public function createuser()
@@ -344,6 +372,9 @@ class Site extends CI_Controller
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="viewvideo";
+$data["tablename"]="ting_video";
+$data["orderfield"]="order";
+$data['activemenu'] = 'videos';
 $data["base_url"]=site_url("site/viewvideojson");
 $data["title"]="View video";
 $this->load->view("template",$data);
@@ -371,6 +402,11 @@ $elements[3]->field="`ting_video`.`title`";
 $elements[3]->sort="1";
 $elements[3]->header="Title";
 $elements[3]->alias="title";
+$elements[4]=new stdClass();
+$elements[4]->field="`ting_video`.`image`";
+$elements[4]->sort="1";
+$elements[4]->header="Image";
+$elements[4]->alias="image";
 $search=$this->input->get_post("search");
 $pageno=$this->input->get_post("pageno");
 $orderby=$this->input->get_post("orderby");
@@ -394,6 +430,7 @@ public function createvideo()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createvideo";
+$data['activemenu'] = 'videos';
 $data["title"]="Create video";
 $this->load->view("template",$data);
 }
@@ -416,7 +453,16 @@ else
 $order=$this->input->get_post("order");
 $videourl=$this->input->get_post("videourl");
 $title=$this->input->get_post("title");
-if($this->video_model->create($order,$videourl,$title)==0)
+ $config['upload_path'] = './uploads/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $this->load->library('upload', $config);
+            $filename = 'image';
+            $image = '';
+            if ($this->upload->do_upload($filename)) {
+                $uploaddata = $this->upload->data();
+                $image = $uploaddata['file_name'];
+            }
+if($this->video_model->create($order,$videourl,$title,$image)==0)
 $data["alerterror"]="New video could not be created.";
 else
 $data["alertsuccess"]="video created Successfully.";
@@ -430,6 +476,7 @@ $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editvideo";
 $data["title"]="Edit video";
+$data['activemenu'] = 'videos';
 $data["before"]=$this->video_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
 }
@@ -455,7 +502,48 @@ $id=$this->input->get_post("id");
 $order=$this->input->get_post("order");
 $videourl=$this->input->get_post("videourl");
 $title=$this->input->get_post("title");
-if($this->video_model->edit($id,$order,$videourl,$title)==0)
+$config['upload_path'] = './uploads/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $this->load->library('upload', $config);
+            $filename = 'image';
+            $image = '';
+            if ($this->upload->do_upload($filename)) {
+                $uploaddata = $this->upload->data();
+                $image = $uploaddata['file_name'];
+                $config_r['source_image'] = './uploads/'.$uploaddata['file_name'];
+                $config_r['maintain_ratio'] = true;
+                $config_t['create_thumb'] = false; ///add this
+                $config_r['width'] = 800;
+                $config_r['height'] = 800;
+                $config_r['quality'] = 100;
+
+                // end of configs
+
+                $this->load->library('image_lib', $config_r);
+                $this->image_lib->initialize($config_r);
+                if (!$this->image_lib->resize()) {
+                    $data['alerterror'] = 'Failed.'.$this->image_lib->display_errors();
+
+                    // return false;
+                } else {
+
+                    // print_r($this->image_lib->dest_image);
+                    // dest_image
+
+                    $image = $this->image_lib->dest_image;
+
+                    // return false;
+                }
+            }
+
+            if ($image == '') {
+                $image = $this->website_model->getImageById($id);
+
+                // print_r($image);
+
+                $image = $image->image;
+            }
+if($this->video_model->edit($id,$order,$videourl,$title,$image)==0)
 $data["alerterror"]="New video could not be Updated.";
 else
 $data["alertsuccess"]="video Updated Successfully.";
@@ -476,6 +564,9 @@ public function viewdigitalmarketing()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="viewdigitalmarketing";
+$data["tablename"]="ting_digitalmarketing";
+$data["orderfield"]="order";
+$data['activemenu'] = 'digital marketing';
 $data["base_url"]=site_url("site/viewdigitalmarketingjson");
 $data["title"]="View digitalmarketing";
 $this->load->view("template",$data);
@@ -556,6 +647,7 @@ public function createdigitalmarketing()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createdigitalmarketing";
+$data['activemenu'] = 'digital marketing';
 $data["title"]="Create digitalmarketing";
 $this->load->view("template",$data);
 }
@@ -589,7 +681,7 @@ $linkedinlink=$this->input->get_post("linkedinlink");
 $instagramlink=$this->input->get_post("instagramlink");
 $youtubelink=$this->input->get_post("youtubelink");
 $pinterestlink=$this->input->get_post("pinterestlink");
- $config['upload_path'] = './uploads/';
+  $config['upload_path'] = './uploads/';
             $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $this->load->library('upload', $config);
             $filename = 'image';
@@ -597,30 +689,6 @@ $pinterestlink=$this->input->get_post("pinterestlink");
             if ($this->upload->do_upload($filename)) {
                 $uploaddata = $this->upload->data();
                 $image = $uploaddata['file_name'];
-                $config_r['source_image'] = './uploads/'.$uploaddata['file_name'];
-                $config_r['maintain_ratio'] = true;
-                $config_t['create_thumb'] = false; ///add this
-                $config_r['width'] = 800;
-                $config_r['height'] = 800;
-                $config_r['quality'] = 100;
-
-                // end of configs
-
-                $this->load->library('image_lib', $config_r);
-                $this->image_lib->initialize($config_r);
-                if (!$this->image_lib->resize()) {
-                    $data['alerterror'] = 'Failed.'.$this->image_lib->display_errors();
-
-                    // return false;
-                } else {
-
-                    // print_r($this->image_lib->dest_image);
-                    // dest_image
-
-                    $image = $this->image_lib->dest_image;
-
-                    // return false;
-                }
             }
 
 if($this->digitalmarketing_model->create($order,$image,$facebooklink,$twitterlink,$googlelink,$linkedinlink,$instagramlink,$youtubelink,$pinterestlink)==0)
@@ -636,6 +704,7 @@ public function editdigitalmarketing()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editdigitalmarketing";
+$data['activemenu'] = 'digital marketing';
 $data["title"]="Edit digitalmarketing";
 $data["before"]=$this->digitalmarketing_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
@@ -736,6 +805,9 @@ public function viewapps()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="viewapps";
+$data['activemenu'] = 'apps';
+$data["tablename"]="ting_apps";
+$data["orderfield"]="order";
 $data["base_url"]=site_url("site/viewappsjson");
 $data["title"]="View apps";
 $this->load->view("template",$data);
@@ -787,6 +859,7 @@ $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createapps";
 $data["title"]="Create apps";
+ $data['activemenu'] = 'apps';
 $this->load->view("template",$data);
 }
 public function createappssubmit() 
@@ -815,32 +888,7 @@ $title=$this->input->get_post("title");
             if ($this->upload->do_upload($filename)) {
                 $uploaddata = $this->upload->data();
                 $image = $uploaddata['file_name'];
-                $config_r['source_image'] = './uploads/'.$uploaddata['file_name'];
-                $config_r['maintain_ratio'] = true;
-                $config_t['create_thumb'] = false; ///add this
-                $config_r['width'] = 800;
-                $config_r['height'] = 800;
-                $config_r['quality'] = 100;
-
-                // end of configs
-
-                $this->load->library('image_lib', $config_r);
-                $this->image_lib->initialize($config_r);
-                if (!$this->image_lib->resize()) {
-                    $data['alerterror'] = 'Failed.'.$this->image_lib->display_errors();
-
-                    // return false;
-                } else {
-
-                    // print_r($this->image_lib->dest_image);
-                    // dest_image
-
-                    $image = $this->image_lib->dest_image;
-
-                    // return false;
-                }
             }
-
 if($this->apps_model->create($order,$image,$title)==0)
 $data["alerterror"]="New apps could not be created.";
 else
@@ -855,6 +903,7 @@ $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editapps";
 $data["title"]="Edit apps";
+$data['activemenu'] = 'apps';
 $data["before"]=$this->apps_model->beforeedit($this->input->get("id"));
 $this->load->view("template",$data);
 }
@@ -942,6 +991,9 @@ public function viewwebsite()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="viewwebsite";
+$data["tablename"]="ting_website";
+$data["orderfield"]="order";
+$data['activemenu'] = 'website';
 $data["base_url"]=site_url("site/viewwebsitejson");
 $data["title"]="View website";
 $this->load->view("template",$data);
@@ -997,6 +1049,7 @@ public function createwebsite()
 $access=array("1");
 $this->checkaccess($access);
 $data["page"]="createwebsite";
+$data['activemenu'] = 'website';
 $data['type'] = $this->user_model->getTypeDropDown();
 $data["title"]="Create website";
 $this->load->view("template",$data);
@@ -1006,8 +1059,6 @@ public function createwebsitesubmit()
 $access=array("1");
 $this->checkaccess($access);
 $this->form_validation->set_rules("order","Order","trim");
-$this->form_validation->set_rules("type","Type","trim");
-$this->form_validation->set_rules("image","Image","trim");
 $this->form_validation->set_rules("title","Title","trim");
 if($this->form_validation->run()==FALSE)
 {
@@ -1019,9 +1070,9 @@ $this->load->view("template",$data);
 }
 else
 {
-$order=$this->input->get_post("order");
-$type=$this->input->get_post("type");
-$title=$this->input->get_post("title");
+$order=$this->input->post("order");
+$title=$this->input->post("title");
+$type=$this->input->post('type');
  $config['upload_path'] = './uploads/';
             $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $this->load->library('upload', $config);
@@ -1030,32 +1081,7 @@ $title=$this->input->get_post("title");
             if ($this->upload->do_upload($filename)) {
                 $uploaddata = $this->upload->data();
                 $image = $uploaddata['file_name'];
-                $config_r['source_image'] = './uploads/'.$uploaddata['file_name'];
-                $config_r['maintain_ratio'] = true;
-                $config_t['create_thumb'] = false; ///add this
-                $config_r['width'] = 800;
-                $config_r['height'] = 800;
-                $config_r['quality'] = 100;
-
-                // end of configs
-
-                $this->load->library('image_lib', $config_r);
-                $this->image_lib->initialize($config_r);
-                if (!$this->image_lib->resize()) {
-                    $data['alerterror'] = 'Failed.'.$this->image_lib->display_errors();
-
-                    // return false;
-                } else {
-
-                    // print_r($this->image_lib->dest_image);
-                    // dest_image
-
-                    $image = $this->image_lib->dest_image;
-
-                    // return false;
-                }
             }
-
 if($this->website_model->create($order,$type,$image,$title)==0)
 $data["alerterror"]="New website could not be created.";
 else
@@ -1070,8 +1096,10 @@ $access=array("1");
 $this->checkaccess($access);
 $data["page"]="editwebsite";
 $data["title"]="Edit website";
+$data['activemenu'] = 'website';
 $data['type'] = $this->user_model->getTypeDropDown();
 $data["before"]=$this->website_model->beforeedit($this->input->get("id"));
+$data['gettypes']=$this->website_model->gettypes($this->input->get("id"));
 $this->load->view("template",$data);
 }
 public function editwebsitesubmit()
@@ -1080,7 +1108,6 @@ $access=array("1");
 $this->checkaccess($access);
 $this->form_validation->set_rules("id","ID","trim");
 $this->form_validation->set_rules("order","Order","trim");
-$this->form_validation->set_rules("type","Type","trim");
 $this->form_validation->set_rules("image","Image","trim");
 $this->form_validation->set_rules("title","Title","trim");
 if($this->form_validation->run()==FALSE)

@@ -3,9 +3,9 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class video_model extends CI_Model
 {
-public function create($order,$videourl,$title)
+public function create($order,$videourl,$title,$image)
 {
-$data=array("order" => $order,"videourl" => $videourl,"title" => $title);
+$data=array("order" => $order,"videourl" => $videourl,"title" => $title,"image" => $image);
 $query=$this->db->insert( "ting_video", $data );
 $id=$this->db->insert_id();
 if(!$query)
@@ -24,9 +24,9 @@ $this->db->where("id",$id);
 $query=$this->db->get("ting_video")->row();
 return $query;
 }
-public function edit($id,$order,$videourl,$title)
+public function edit($id,$order,$videourl,$title,$image)
 {
-$data=array("order" => $order,"videourl" => $videourl,"title" => $title);
+$data=array("order" => $order,"videourl" => $videourl,"title" => $title,"image" => $image);
 $this->db->where( "id", $id );
 $query=$this->db->update( "ting_video", $data );
 return 1;

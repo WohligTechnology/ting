@@ -19,6 +19,7 @@
 <input class="file-path validate" type="text" placeholder="Upload one or more files" value='<?php echo set_value('image');?>'>
 </div>
 </div>
+<span style="line-height: 600%;color:#B5ACAC">Size of Image should be between 450px and 943px.</span>
 </div>
 <div class="row">
 <div class="input-field col s6">
