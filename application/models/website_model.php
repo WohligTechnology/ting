@@ -63,5 +63,11 @@ public function getimagebyid($id)
 		return $return;
 	}
 
+	public function getwebsites($id){
+		$query=$this->db->query("SELECT `website` FROM `type` WHERE `type`='$id'")->result();
+		return $query;
+
+	}
+
 }
 ?>
