@@ -213,9 +213,13 @@ else{
                 $ids=$ids.",".$val->website;
         }
         $ids.=")"; 
-
+     if($ids=="()")
+        {
+           $ids="(0)";
+        }
 $where.="WHERE `ting_website`.`id`IN ".$ids;
 }
+    
 $elements=array();
 $elements[0]=new stdClass();
 $elements[0]->field="`ting_website`.`id`";
