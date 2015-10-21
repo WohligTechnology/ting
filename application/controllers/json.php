@@ -198,8 +198,13 @@ $this->load->view("json",$data);
 function getallwebsite()
 {
 $id=$this->input->get('id');
-$webids=$this->website_model->getwebsites($id);
- $ids="(";
+$where="";
+if($id ==7){
+ $where.="WHERE 1";
+}
+else{
+	$webids=$this->website_model->getwebsites($id);
+	$ids="(";
         foreach($webids as $key=>$val)
         {
            if($key==0)
@@ -209,6 +214,8 @@ $webids=$this->website_model->getwebsites($id);
         }
         $ids.=")"; 
 
+$where.="WHERE `ting_website`.`id`IN ".$ids;
+}
 $elements=array();
 $elements[0]=new stdClass();
 $elements[0]->field="`ting_website`.`id`";
@@ -259,7 +266,7 @@ if($orderby=="")
 $orderby="order";
 $orderorder="ASC";
 }
-$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,"FROM `ting_website`","WHERE `ting_website`.`id`IN $ids");
+$data["message"]=$this->chintantable->query($pageno,$maxrow,$orderby,$orderorder,$search,$elements,'FROM `ting_website`',"$where");
 $this->load->view("json",$data);
 }
 public function getsinglewebsite()
