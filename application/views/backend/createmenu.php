@@ -5,7 +5,7 @@
 				 Menu Details
 			</header>
 			<div class="panel-body">
-			    <form class="form-horizontal tasi-form" method="post" action="<?php echo site_url('menu/createmenusubmit');?>">
+			    <form class="form-horizontal tasi-form" method="post" action="<?php echo site_url('menu/createmenusubmit');?>" enctype= 'multipart/form-data'>
 				    <div class="form-group">
 						<label class="col-sm-2 control-label">Name</label>
 						<div class="col-sm-4">
@@ -35,7 +35,7 @@
 						<div class="col-sm-4">
 						  <input type="text" id="normal-field" class="form-control" name="url" value="<?php echo set_value('url'); ?>">
 						</div>
-					</div>	
+					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label">Link Type</label>
 						<div class="col-sm-4">
@@ -45,7 +45,7 @@
 							"2" => "Base URL",
 							"3" => "External URL"
 							);
-							echo form_dropdown('linktype',$linktype,set_value('linktype')); 
+							echo form_dropdown('linktype',$linktype,set_value('linktype'));
 						  ?>
 						</div>
 					</div>
@@ -65,7 +65,7 @@
 					<div class=" form-group">
 					  <label class="col-sm-2 control-label">Is active</label>
 					  <div class="col-sm-4">
-						<?php 	
+						<?php
 						$isactive = array(
 						"1" => "Yes",
 						"2" => "No",
@@ -82,7 +82,7 @@
 					</div>
 					<div class="form-group">
 						<label class="col-sm-2 control-label">&nbsp;</label>
-						<div class="col-sm-4">	
+						<div class="col-sm-4">
 							<button type="submit" class="btn btn-info">Submit</button>
 						</div>
 					</div>
