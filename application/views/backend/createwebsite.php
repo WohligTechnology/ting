@@ -61,13 +61,13 @@
 
 <div class="row">
 <div class="input-field col s6">
-<label for="Title">Link</label>
+<label for="Title">Title</label>
 <input type="text" id="Title" name="title" value='<?php echo set_value('title');?>'>
 </div>
 </div>
  <div class="row">
             <div class="input-field col s6">
-                <label for="link">Title</label>
+                <label for="link">Link</label>
                 <input type="text" id="link" name="link" value='<?php echo set_value(' link ');?>'>
             </div>
         </div>
