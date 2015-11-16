@@ -3,9 +3,9 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class website_model extends CI_Model
 {
-public function create($order,$type,$image,$title)
+public function create($order,$type,$image,$title,$link)
 {
-$data=array("order" => $order,"image" => $image,"title" => $title);
+$data=array("order" => $order,"image" => $image,"title" => $title,"link" => $link);
 $query=$this->db->insert( "ting_website", $data );
 $websiteid=$this->db->insert_id();
 
@@ -28,9 +28,9 @@ $this->db->where("id",$id);
 $query=$this->db->get("ting_website")->row();
 return $query;
 }
-public function edit($id,$order,$type,$image,$title)
+public function edit($id,$order,$type,$image,$title,$link)
 {
-$data=array("order" => $order,"image" => $image,"title" => $title);
+$data=array("order" => $order,"image" => $image,"title" => $title,"link" => $link);
 $this->db->where( "id", $id );
 $query=$this->db->update( "ting_website", $data );
 $query=$this->db->query("DELETE FROM `type` WHERE `website`='$id'");

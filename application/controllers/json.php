@@ -253,7 +253,13 @@ $elements[4]=new stdClass();
 $elements[4]->field="`ting_website`.`title`";
 $elements[4]->sort="1";
 $elements[4]->header="Title";
-$elements[4]->alias="title";
+$elements[4]->alias="link";
+    
+$elements[5]=new stdClass();
+$elements[5]->field="`ting_website`.`link`";
+$elements[5]->sort="1";
+$elements[5]->header="Link";
+$elements[5]->alias="title";
 
 
 

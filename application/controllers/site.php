@@ -1073,6 +1073,7 @@ else
 $order=$this->input->post("order");
 $title=$this->input->post("title");
 $type=$this->input->post('type');
+$link=$this->input->post('link');
  $config['upload_path'] = './uploads/';
             $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $this->load->library('upload', $config);
@@ -1082,7 +1083,7 @@ $type=$this->input->post('type');
                 $uploaddata = $this->upload->data();
                 $image = $uploaddata['file_name'];
             }
-if($this->website_model->create($order,$type,$image,$title)==0)
+if($this->website_model->create($order,$type,$image,$title,$link)==0)
 $data["alerterror"]="New website could not be created.";
 else
 $data["alertsuccess"]="website created Successfully.";
@@ -1125,6 +1126,7 @@ $id=$this->input->get_post("id");
 $order=$this->input->get_post("order");
 $type=$this->input->get_post("type");
 $title=$this->input->get_post("title");
+$link=$this->input->post('link');
 $config['upload_path'] = './uploads/';
             $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $this->load->library('upload', $config);
@@ -1167,7 +1169,7 @@ $config['upload_path'] = './uploads/';
                 $image = $image->image;
             }
 
-if($this->website_model->edit($id,$order,$type,$image,$title)==0)
+if($this->website_model->edit($id,$order,$type,$image,$title,$link)==0)
 $data["alerterror"]="New website could not be Updated.";
 else
 $data["alertsuccess"]="website Updated Successfully.";

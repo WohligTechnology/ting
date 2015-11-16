@@ -106,8 +106,14 @@
         </div>
         <div class="row">
             <div class="input-field col s6">
-                <label for="Title">Title</label>
+                <label for="Title">Link</label>
                 <input type="text" id="Title" name="title" value='<?php echo set_value(' title ',$before->title);?>'>
+            </div>
+        </div>
+           <div class="row">
+            <div class="input-field col s6">
+                <label for="link">Title</label>
+                <input type="text" id="link" name="link" value='<?php echo set_value(' link ',$before->link);?>'>
             </div>
         </div>
         <div class="row">
