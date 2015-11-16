@@ -42,7 +42,7 @@
 				</div>
 			
 			</div>
-
+<span style="line-height: 600%;color:#B5ACAC">Size of Thumbnail should be between 340px and 200px.</span>
 		</div>
 <div class="row">
 <div class="col s6">

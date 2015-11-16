@@ -102,6 +102,7 @@
                 </div>
 
             </div>
+            <span style="line-height: 600%;color:#B5ACAC">Size of Image should be between 350px and 210px.</span>
 
         </div>
         <div class="row">
