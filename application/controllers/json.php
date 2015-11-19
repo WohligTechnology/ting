@@ -172,6 +172,18 @@ $elements[3]->field="`ting_apps`.`title`";
 $elements[3]->sort="1";
 $elements[3]->header="Title";
 $elements[3]->alias="title";
+    
+$elements[4]=new stdClass();
+$elements[4]->field="`ting_apps`.`ios`";
+$elements[4]->sort="1";
+$elements[4]->header="ios";
+$elements[4]->alias="ios";
+    
+$elements[5]=new stdClass();
+$elements[5]->field="`ting_apps`.`android`";
+$elements[5]->sort="1";
+$elements[5]->header="android";
+$elements[5]->alias="android";
 
 $search=$this->input->get_post("search");
 $pageno=$this->input->get_post("pageno");
