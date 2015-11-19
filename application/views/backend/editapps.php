@@ -39,6 +39,18 @@
 <input type="text" id="Title" name="title" value='<?php echo set_value('title',$before->title);?>'>
 </div>
 </div>
+    <div class="row">
+<div class="input-field col s6">
+<label for="ios">Ios</label>
+<input type="text" id="ios" name="ios" value='<?php echo set_value('ios',$before->ios);?>'>
+</div>
+</div>
+<div class="row">
+<div class="input-field col s6">
+<label for="android">Android</label>
+<input type="text" id="android" name="android" value='<?php echo set_value('android',$before->android);?>'>
+</div>
+</div>
 <div class="row">
 <div class="col s6">
 <button type="submit" class="btn btn-primary waves-effect waves-light  blue darken-4">Save</button>

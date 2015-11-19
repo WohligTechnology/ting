@@ -880,6 +880,8 @@ else
 {
 $order=$this->input->get_post("order");
 $title=$this->input->get_post("title");
+$ios=$this->input->get_post("ios");
+$android=$this->input->get_post("android");
  $config['upload_path'] = './uploads/';
             $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $this->load->library('upload', $config);
@@ -889,7 +891,7 @@ $title=$this->input->get_post("title");
                 $uploaddata = $this->upload->data();
                 $image = $uploaddata['file_name'];
             }
-if($this->apps_model->create($order,$image,$title)==0)
+if($this->apps_model->create($order,$image,$title,$ios,$android)==0)
 $data["alerterror"]="New apps could not be created.";
 else
 $data["alertsuccess"]="apps created Successfully.";
@@ -928,6 +930,8 @@ else
 $id=$this->input->get_post("id");
 $order=$this->input->get_post("order");
 $title=$this->input->get_post("title");
+$ios=$this->input->get_post("ios");
+$android=$this->input->get_post("android");
 $config['upload_path'] = './uploads/';
             $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $this->load->library('upload', $config);
@@ -970,7 +974,7 @@ $config['upload_path'] = './uploads/';
                 $image = $image->image;
             }
 
-if($this->apps_model->edit($id,$order,$image,$title)==0)
+if($this->apps_model->edit($id,$order,$image,$title,$ios,$android)==0)
 $data["alerterror"]="New apps could not be Updated.";
 else
 $data["alertsuccess"]="apps Updated Successfully.";

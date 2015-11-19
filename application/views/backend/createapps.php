@@ -28,6 +28,18 @@
 </div>
 </div>
 <div class="row">
+<div class="input-field col s6">
+<label for="ios">Ios</label>
+<input type="text" id="ios" name="ios" value='<?php echo set_value('ios');?>'>
+</div>
+</div>
+<div class="row">
+<div class="input-field col s6">
+<label for="android">Android</label>
+<input type="text" id="android" name="android" value='<?php echo set_value('android');?>'>
+</div>
+</div>
+<div class="row">
 <div class="col s12 m6">
 <button type="submit" class="btn btn-primary waves-effect waves-light blue darken-4">Save</button>
 <a href="<?php echo site_url("site/viewapps"); ?>" class="btn btn-secondary waves-effect waves-light red">Cancel</a>

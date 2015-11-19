@@ -3,9 +3,9 @@ if ( !defined( "BASEPATH" ) )
 exit( "No direct script access allowed" );
 class apps_model extends CI_Model
 {
-public function create($order,$image,$title)
+public function create($order,$image,$title,$ios,$android)
 {
-$data=array("order" => $order,"image" => $image,"title" => $title);
+$data=array("order" => $order,"image" => $image,"title" => $title,"ios" => $ios,"android" => $android);
 $query=$this->db->insert( "ting_apps", $data );
 $id=$this->db->insert_id();
 if(!$query)
@@ -24,9 +24,9 @@ $this->db->where("id",$id);
 $query=$this->db->get("ting_apps")->row();
 return $query;
 }
-public function edit($id,$order,$image,$title)
+public function edit($id,$order,$image,$title,$ios,$android)
 {
-$data=array("order" => $order,"image" => $image,"title" => $title);
+$data=array("order" => $order,"image" => $image,"title" => $title,"ios" => $ios,"android" => $android);
 $this->db->where( "id", $id );
 $query=$this->db->update( "ting_apps", $data );
 return 1;
